@@ -1,8 +1,8 @@
 -- alx_book_store.sql
 -- Database and tables for ALX Book Store
 
-CREATE DATABASE IF NOT EXISTS alx_book_store;
-USE alx_book_store;
+CREATE DATABASE IF NOT EXISTS `alx_book_store`;
+USE `alx_book_store`;
 
 -- Authors Table
 CREATE TABLE IF NOT EXISTS Authors (
