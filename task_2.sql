@@ -1,38 +1,38 @@
-USE ALX_BOOK_STORE;
+USE `alx_book_store`;
 
-CREATE TABLE AUTHORS (
-    author_id INT PRIMARY KEY,
-    author_name VARCHAR(215)
-);
+CREATE TABLE IF NOT EXISTS authors (
+    author_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    author_name VARCHAR(215) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE BOOKS (
-    book_id INT PRIMARY KEY,
-    title VARCHAR(130),
-    author_id INT,
+CREATE TABLE IF NOT EXISTS books (
+    book_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(130) NOT NULL,
+    author_id INT NOT NULL,
     price DOUBLE,
     publication_date DATE,
-    FOREIGN KEY (author_id) REFERENCES AUTHORS(author_id)
-);
+    CONSTRAINT fk_books_author FOREIGN KEY (author_id) REFERENCES authors(author_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE CUSTOMERS (
-    customer_id INT PRIMARY KEY,
-    customer_name VARCHAR(215),
+CREATE TABLE IF NOT EXISTS customers (
+    customer_id INT NOT NULL PRIMARY KEY,
+    customer_name VARCHAR(215) NOT NULL,
     email VARCHAR(215),
     address TEXT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE ORDERS (
-    order_id INT PRIMARY KEY,
-    customer_id INT,
+CREATE TABLE IF NOT EXISTS `orders` (
+    order_id INT NOT NULL PRIMARY KEY,
+    customer_id INT NOT NULL,
     order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES CUSTOMERS(customer_id)
-);
+    CONSTRAINT fk_orders_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE ORDER_DETAILS (
-    orderdetailid INT PRIMARY KEY,
-    order_id INT,
-    book_id INT,
+CREATE TABLE IF NOT EXISTS order_details (
+    orderdetailid INT NOT NULL PRIMARY KEY,
+    order_id INT NOT NULL,
+    book_id INT NOT NULL,
     quantity DOUBLE,
-    FOREIGN KEY (order_id) REFERENCES ORDERS(order_id),
-    FOREIGN KEY (book_id) REFERENCES BOOKS(book_id)
-);
+    CONSTRAINT fk_orderdetails_order FOREIGN KEY (order_id) REFERENCES `orders`(order_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_orderdetails_book FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
