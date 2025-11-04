@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """
-MySQLServer.py - Create alx_book_store database if it doesn't exist
+MySQLServer.py
+Create database alx_book_store if it does not exist
 """
 
 import mysql.connector
 from mysql.connector import Error
 
 try:
-    # Connect to MySQL Server
     connection = mysql.connector.connect(
-        host='localhost',
-        user='root',        # 👈 change if your MySQL user is different
-        password='yourpassword'  # 👈 replace with your MySQL password
+        host="localhost",
+        user="root",             # change if needed
+        password="yourpassword"  # change to your MySQL password
     )
 
     if connection.is_connected():
@@ -23,6 +23,9 @@ except Error as e:
     print(f"Error while connecting to MySQL: {e}")
 
 finally:
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
+    try:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+    except:
+        pass
